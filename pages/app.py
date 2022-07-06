@@ -13,6 +13,7 @@ import plotly.figure_factory as ff
 from sklearn.metrics import accuracy_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
 import seaborn as sns
 
 
@@ -20,9 +21,9 @@ import seaborn as sns
 df = pd.read_csv('diabetes.csv')
 
 # HEADINGS
-st.title('Diabetes Checkup')
+st.title('Control de la diabetes')
 st.sidebar.header('Datos del paciente')
-st.subheader('Training Data Stats')
+st.subheader('Estadísticas de los datos de entrenamiento')
 st.write(df.describe())
 
 
@@ -75,7 +76,7 @@ user_result = rf.predict(user_data)
 
 
 # VISUALISATIONS
-st.title('Visualised Patient Report')
+st.title('Informe del paciente visualizado')
 
 
 
@@ -165,14 +166,18 @@ plt.title('0 - Healthy & 1 - Unhealthy')
 st.pyplot(fig_dpf)
 
 
-
 # OUTPUT
 st.subheader('Reporte: ')
 output=''
 if user_result[0]==0:
   output = 'No eres diabetico'
+  image = Image.open('feliz.jpg')
+  st.image(image, caption='Siga cuidándose')
 else:
   output = 'Eres diabetico'
+  image = Image.open('triste.jpg')
+  st.image(image, caption='Acercate al hospital mas cercano')
 st.title(output)
 st.subheader('Precisión: ')
 st.write(str(accuracy_score(y_test, rf.predict(x_test))*100)+'%')
+
